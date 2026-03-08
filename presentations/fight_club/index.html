@@ -58,6 +58,10 @@
     .reveal .slides section.slide-interpretation {
       border-left: 4px solid var(--red);
     }
+    .reveal .slides section.slide-title {
+      padding: 0;
+      overflow: hidden;
+    }
 
     /* ── Typography ── */
     .reveal h1 {
@@ -252,7 +256,7 @@
     }
 
     .title-slide.hero-layout {
-      padding: 2rem 0;
+      padding: 2rem 0 2rem 3rem;
     }
 
     .title-copy {
@@ -310,7 +314,7 @@
       width: 58%;
       z-index: 1;
       opacity: 0.98;
-      border-left: 1px solid rgba(125, 106, 46, 0.18);
+      overflow: hidden;
     }
 
     .title-graph::before,
@@ -324,9 +328,10 @@
 
     .title-graph::before {
       background: linear-gradient(90deg,
-        rgba(10, 10, 10, 1) 0%,
-        rgba(10, 10, 10, 0.9) 16%,
-        rgba(10, 10, 10, 0.42) 42%,
+        rgba(10, 10, 10, 0.98) 0%,
+        rgba(10, 10, 10, 0.86) 12%,
+        rgba(10, 10, 10, 0.56) 28%,
+        rgba(10, 10, 10, 0.22) 48%,
         rgba(10, 10, 10, 0.1) 100%);
     }
 
@@ -337,10 +342,12 @@
     }
 
     .title-graph iframe {
-      width: 100%;
+      width: calc(100% + 12px);
       height: 100%;
       border: none;
       background: transparent;
+      margin-left: -6px;
+      margin-right: -6px;
     }
 
     /* ── Anomaly node highlight ── */

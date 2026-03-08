@@ -683,6 +683,10 @@
 const embedMode = new URLSearchParams(window.location.search).get('embed');
 const heroMode = embedMode === 'hero';
 if (heroMode) document.body.classList.add('hero-embed');
+const heroEdgeWidthMultiplier = 0.82;
+const heroEdgeMinWidth = 0.8;
+const heroEdgeOpacityMultiplier = 0.62;
+const heroEdgeMinOpacity = 0.12;
 
 const GRAPHML_DATA = `<?xml version='1.0' encoding='utf-8'?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d0" for="edge" attr.name="weight" attr.type="long"/>
@@ -1164,7 +1168,7 @@ function hexToRgba(hex, alpha) {
 
 function getNodeRadius(node, mode) {
   if (heroMode) {
-    return 2 + normDeg(node.id) * 4.5;
+    return 2.4 + normDeg(node.id) * 5.8;
   }
   const base = 5, range = 22;
   let norm;
@@ -1179,7 +1183,12 @@ function getNodeRadius(node, mode) {
 function getCollisionRadius(node, mode) {
   const base = getNodeRadius(node, mode);
   if (!heroMode) return base + 5;
-  return base + Math.min(40, node.label.length * 2.4);
+  return base + Math.min(46, node.label.length * 2.9);
+}
+
+function getHeroLabelSize(node, mode = 'degree') {
+  const r = getNodeRadius(node, mode);
+  return Math.max(11, Math.min(20, 9.6 + r * 1.25)) + 'px';
 }
 
 // Update stats
@@ -1308,8 +1317,8 @@ const simulation = d3.forceSimulation(nodes)
 const linkSel = g.append('g').selectAll('line')
   .data(linkData).join('line')
   .attr('stroke', heroMode ? 'rgba(216, 205, 192, 0.3)' : '#3a2820')
-  .attr('stroke-width', d => heroMode ? Math.max(0.5, d.strokeWidth * 0.55) : d.strokeWidth)
-  .attr('stroke-opacity', d => heroMode ? Math.max(0.08, d.opacity * 0.45) : d.opacity);
+  .attr('stroke-width', d => heroMode ? Math.max(heroEdgeMinWidth, d.strokeWidth * heroEdgeWidthMultiplier) : d.strokeWidth)
+  .attr('stroke-opacity', d => heroMode ? Math.max(heroEdgeMinOpacity, d.opacity * heroEdgeOpacityMultiplier) : d.opacity);
 
 const nodeGroup = g.append('g').selectAll('g')
   .data(nodes).join('g')
@@ -1332,12 +1341,7 @@ const labelSel = nodeGroup.append('text')
   .attr('font-family', "'Oswald', sans-serif")
   .attr('font-weight', heroMode ? '300' : '400')
   .attr('fill', heroMode ? '#efe5d7' : '#b0a090')
-  .attr('font-size', d => {
-    const r = getNodeRadius(d, 'degree');
-    return heroMode
-      ? Math.max(10, Math.min(18, 8 + d.label.length * 0.12 + r * 0.55)) + 'px'
-      : Math.max(7, Math.min(11, r * 0.6)) + 'px';
-  })
+  .attr('font-size', d => heroMode ? getHeroLabelSize(d, 'degree') : Math.max(7, Math.min(11, getNodeRadius(d, 'degree') * 0.6)) + 'px')
   .attr('stroke', heroMode ? 'rgba(8, 7, 6, 0.88)' : 'none')
   .attr('stroke-width', heroMode ? 2.4 : 0)
   .attr('paint-order', 'stroke')
@@ -1424,12 +1428,7 @@ function updateNodeSizes() {
     .attr('r', d => getNodeRadius(d, currentMode));
   labelSel.transition().duration(500)
     .attr('dy', d => heroMode ? '0.32em' : getNodeRadius(d, currentMode) + 9)
-    .attr('font-size', d => {
-      const r = getNodeRadius(d, currentMode);
-      return heroMode
-        ? Math.max(10, Math.min(18, 8 + d.label.length * 0.12 + r * 0.55)) + 'px'
-        : Math.max(7, Math.min(11, r * 0.6)) + 'px';
-    });
+    .attr('font-size', d => heroMode ? getHeroLabelSize(d, currentMode) : Math.max(7, Math.min(11, getNodeRadius(d, currentMode) * 0.6)) + 'px');
   simulation.force('collision', d3.forceCollide().radius(d => getCollisionRadius(d, currentMode)));
   simulation.alphaTarget(0.1).restart();
   setTimeout(() => simulation.alphaTarget(0), 800);
