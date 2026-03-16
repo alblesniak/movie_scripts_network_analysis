@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gephi Lite – Tutorial: Sieć postaci Fight Club</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: #2a2a2a;
+    --accent: #d4382a;
+    --accent2: #ff6b5a;
+    --gold: #c9a84c;
+    --text: #e8e0d5;
+    --muted: #7a7570;
+    --code-bg: #161616;
+    --step-w: 680px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 60px 60px 50px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 800px 400px at 70% 50%, rgba(212,56,42,0.08) 0%, transparent 70%),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.015) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.015) 40px);
+    z-index: 0;
+  }
+
+  .header-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    z-index: 0;
+  }
+
+  header > * { position: relative; z-index: 1; }
+
+  .badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 10px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 8vw, 90px);
+    letter-spacing: 0.02em;
+    line-height: 0.9;
+    color: #fff;
+    margin-bottom: 18px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .meta-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .meta-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* MAIN LAYOUT */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* NETWORK OVERVIEW */
+  .overview-box {
+    margin: 48px 0;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 32px 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    position: relative;
+  }
+
+  .overview-box::before {
+    content: 'TWOJA SIEĆ';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--surface);
+    padding: 0 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .stat-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-right: 1px solid var(--border);
+    padding-right: 24px;
+  }
+  .stat-cell:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .stat-note {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  /* STEPS */
+  .steps-container { counter-reset: step; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 0 28px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .step::after {
+    content: '';
+    position: absolute;
+    top: 60px;
+    left: 29px;
+    bottom: -28px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--border), transparent);
+  }
+  .step:last-child::after { display: none; }
+
+  .step-number {
+    counter-increment: step;
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-number::before {
+    content: counter(step, decimal-leading-zero);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .step-content { padding-top: 8px; }
+
+  .step-content h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  .step-content h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin: 20px 0 8px;
+    font-weight: 600;
+  }
+
+  .step-content p { margin-bottom: 10px; color: #c8c0b8; }
+
+  /* ACTION BLOCKS */
+  .action {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+
+  .action strong {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: #fff;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* CLICK PATH */
+  .click-path {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+
+  .click-path .btn {
+    background: #1e1e1e;
+    border: 1px solid #3a3a3a;
+    padding: 4px 10px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .click-path .btn.primary {
+    background: rgba(212,56,42,0.15);
+    border-color: var(--accent);
+    color: var(--accent2);
+  }
+
+  .click-path .arrow {
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  /* TIP BOXES */
+  .tip {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 12px;
+  }
+
+  .tip-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .tip-body { font-size: 13px; color: #b8b0a5; }
+  .tip-body strong { color: var(--gold); font-weight: 600; }
+
+  .warn {
+    background: rgba(212,56,42,0.06);
+    border: 1px solid rgba(212,56,42,0.2);
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 12px;
+  }
+
+  .warn .tip-body { color: #c8aba8; }
+  .warn .tip-body strong { color: var(--accent2); }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    margin: 14px 0;
+  }
+
+  .data-table th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+
+  .data-table td {
+    padding: 7px 14px;
+    border-bottom: 1px solid rgba(42,42,42,0.7);
+    color: #c0b8b0;
+  }
+
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .badge-pill {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 0;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  .pill-red { background: rgba(212,56,42,0.2); color: var(--accent2); }
+  .pill-gold { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .pill-grey { background: rgba(120,115,110,0.15); color: var(--muted); }
+
+  /* SETTINGS BLOCK */
+  .settings-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 18px 20px;
+    margin: 12px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+
+  .settings-block .line {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(42,42,42,0.5);
+    gap: 12px;
+  }
+  .settings-block .line:last-child { border-bottom: none; }
+
+  .settings-block .key { color: var(--muted); }
+  .settings-block .val { color: var(--gold); font-weight: 600; }
+
+  /* RESULT BAR */
+  .result-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 6px 0;
+    font-size: 13px;
+  }
+
+  .result-bar .name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #fff;
+    width: 160px;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    height: 8px;
+    background: var(--surface2);
+    flex: 1;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .bar-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-left {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-right a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,107,90,0.3);
+    padding-bottom: 1px;
+  }
+
+  /* PHASE LABEL */
+  .phase-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 48px 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .phase-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--code-bg);
+    padding: 1px 6px;
+    font-size: 12px;
+    color: var(--accent2);
+    border: 1px solid var(--border);
+  }
+
+  ul, ol {
+    padding-left: 20px;
+    margin: 8px 0;
+  }
+
+  li { margin: 4px 0; color: #c0b8b0; font-size: 14px; }
+
+  @media print {
+    body { background: #fff; color: #111; }
+    .header-bg, .header-noise { display: none; }
+    header { background: #f5f5f5; color: #111; }
+    h1, h1 span { color: #111; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-bg"></div>
+  <div class="header-noise"></div>
+  <div class="badge">Gephi Lite — Krok po kroku</div>
+  <h1>WIZUALIZACJA<br>SIECI <span>FIGHT CLUB</span></h1>
+  <p class="subtitle">graf_postaci.graphml &nbsp;·&nbsp; Kompleksowy tutorial Gephi Lite</p>
+  <div class="meta-row">
+    <div class="meta-item">
+      <span class="meta-label">Węzły</span>
+      <span class="meta-value">47</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Krawędzie</span>
+      <span class="meta-value">103</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Atrybut</span>
+      <span class="meta-value">weight (long)</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Graf</span>
+      <span class="meta-value">nieskierowany</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Aplikacja</span>
+      <span class="meta-value">lite.gephi.org</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="overview-box">
+    <div class="stat-cell">
+      <span class="stat-num">40</span>
+      <span class="stat-label">Najsilniejsza relacja</span>
+      <span class="stat-note">JACK ↔ TYLER (weight)</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">37</span>
+      <span class="stat-label">Stopień centralnego węzła</span>
+      <span class="stat-note">JACK — hub całej sieci</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Szacowane klastry</span>
+      <span class="stat-note">wykryte przez modularity</span>
+    </div>
+  </div>
+
+  <!-- =================== PHASE 1 =================== -->
+  <div class="phase-label">Faza 1 — Import i orientacja</div>
+  <div class="steps-container">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-number"></div>
+      <div class="step-content">
+        <h2>Otwórz Gephi Lite i zaimportuj plik</h2>
+        <p>Gephi Lite działa w przeglądarce — nie wymaga instalacji. Otwórz adres <code>lite.gephi.org</code> w Chrome lub Firefox.</p>
+
+        <h3>Jak wczytać plik</h3>
+        <p>Na ekranie powitalnym kliknij <strong>„Open a local file"</strong> i wybierz <code>graf_postaci.graphml</code> z dysku.</p>
+
+        <div class="action">
+          <strong>📂 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn primary">Open a local file</span>
+            <span class="arrow">→</span>
+            <span class="btn">wybierz graf_postaci.graphml</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">Open</span>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <span class="tip-body">Gephi Lite obsługuje formaty <strong>GraphML, GEXF, JSON Graph</strong>. Twój plik jest w formacie <code>.graphml</code> — zostanie wczytany automatycznie bez konwersji.</span>
+        </div>
+
+        <p>Po załadowaniu na ekranie zobaczysz rozproszone węzły bez żadnego układu — to normalne. Sieć ma <strong>47 węzłów</strong> i <strong>103 krawędzie</strong>.</p>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-number"></div>
+      <div class="step-content">
+        <h2>Przejrzyj dane w zakładce Data</h2>
+        <p>Zanim przejdziesz do wizualizacji, sprawdź co zawiera Twoja sieć.</p>
+
+        <div class="action">
+          <strong>📊 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn primary">Data</span>
+            <span class="arrow">(górna belka)</span>
+          </div>
+        </div>
+
+        <p>Tabela węzłów pokazuje wszystkie postacie. Kliknij <strong>„Edges"</strong> u góry lewego panelu, żeby przełączyć się na krawędzie — zobaczysz atrybut <code>weight</code>.</p>
+
+        <h3>Najważniejsze relacje w Twojej sieci</h3>
+        <table class="data-table">
+          <tr><th>Source</th><th>Target</th><th>Weight</th><th>Znaczenie</th></tr>
+          <tr><td>JACK</td><td>TYLER</td><td><span class="badge-pill pill-red">40</span></td><td>Dominujące połączenie</td></tr>
+          <tr><td>JACK</td><td>MARLA</td><td><span class="badge-pill pill-gold">19</span></td><td>Druga najsilniejsza relacja</td></tr>
+          <tr><td>TYLER</td><td>MARLA</td><td><span class="badge-pill pill-gold">6</span></td><td>Trójkąt głównych postaci</td></tr>
+          <tr><td>JACK</td><td>BOSS</td><td><span class="badge-pill pill-grey">5</span></td><td>Relacja zawodowa</td></tr>
+          <tr><td>ANGEL FACE</td><td>RICKY</td><td><span class="badge-pill pill-grey">2</span></td><td>Space Monkey cluster</td></tr>
+        </table>
+
+        <div class="warn">
+          <span class="tip-icon">⚠️</span>
+          <span class="tip-body">W danych są <strong>dwa błędne węzły</strong>: <code>BUSISNESS WOMAN</code> (literówka) i węzeł z wieloliniową nazwą zaczynającą się od <code>JACK\nNO...</code> — artefakt ze skryptu ekstrakcji. Możesz je usunąć lub scalić w zakładce Data → Nodes (kliknij węzeł → Delete).</span>
+        </div>
+
+        <div class="action">
+          <strong>🔙 Powrót do grafu:</strong>
+          <div class="click-path">
+            <span class="btn primary">Graph</span>
+            <span class="arrow">(górna belka)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /steps-container -->
+
+  <!-- =================== PHASE 2 =================== -->
+  <div class="phase-label">Faza 2 — Układ przestrzenny (Layout)</div>
+  <div class="steps-container">
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 2;"></div>
+      <div class="step-content">
+        <h2>Zastosuj układ ForceAtlas 2</h2>
+        <p>ForceAtlas 2 to algorytm siłowo-skierowany, który <strong>automatycznie układa węzły</strong> tak, że silnie połączone postacie lądują blisko siebie, a słabo połączone — daleko. To serce każdej wizualizacji w Gephi Lite.</p>
+
+        <div class="action">
+          <strong>🔧 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn">Lewy panel</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">Layout</span>
+            <span class="arrow">→</span>
+            <span class="btn">ForceAtlas 2</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">▶ Run</span>
+          </div>
+        </div>
+
+        <h3>Zalecane ustawienia dla tej sieci</h3>
+        <div class="settings-block">
+          <div class="line"><span class="key">Scaling</span><span class="val">100</span></div>
+          <div class="line"><span class="key">Gravity</span><span class="val">1.0</span></div>
+          <div class="line"><span class="key">Prevent Overlap</span><span class="val">✓ włączone</span></div>
+          <div class="line"><span class="key">Edge Weight Influence</span><span class="val">1.0</span></div>
+          <div class="line"><span class="key">LinLog mode</span><span class="val">nie zmieniaj</span></div>
+        </div>
+
+        <p>Obserwuj, jak JACK i TYLER przyciągają się do centrum — to efekt ich wagi <code>weight=40</code>. Gdy animacja się ustabilizuje, kliknij <strong>■ Stop</strong>.</p>
+
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <span class="tip-body">Jeśli sieć wygląda zbyt ściśnięta — <strong>zwiększ Scaling do 200</strong>. Jeśli węzły się nakładają mimo „Prevent Overlap" — uruchom ForceAtlas 2 ponownie przez kilka sekund po zatrzymaniu.</span>
+        </div>
+
+        <h3>Alternatywny układ: Noverlap</h3>
+        <p>Po zatrzymaniu ForceAtlas 2 możesz uruchomić <strong>Noverlap</strong> jako post-processing — rozsuwa on węzły bez zmiany ogólnej struktury. Polecane gdy węzły się nakładają.</p>
+
+        <div class="action">
+          <strong>✨ Opcjonalnie:</strong>
+          <div class="click-path">
+            <span class="btn">Layout</span>
+            <span class="arrow">→</span>
+            <span class="btn">Noverlap</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">▶ Run</span>
+            <span class="arrow">→</span>
+            <span class="btn">■ Stop po ~2 sek.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /steps-container -->
+
+  <!-- =================== PHASE 3 =================== -->
+  <div class="phase-label">Faza 3 — Metryki sieci</div>
+  <div class="steps-container">
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 3;"></div>
+      <div class="step-content">
+        <h2>Oblicz metryki: Degree, Modularity, Betweenness</h2>
+        <p>Metryki są kluczowe — pozwalają <em>zmierzyć</em> znaczenie każdej postaci i znaleźć wspólnoty. Obliczone wartości staną się atrybutami węzłów, które za chwilę wykorzystamy w wyglądzie.</p>
+
+        <div class="action">
+          <strong>📐 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn">Lewy panel</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">Statistics</span>
+          </div>
+        </div>
+
+        <h3>① Stopień (Degree)</h3>
+        <p>Kliknij <strong>Run</strong> przy <em>Degree</em>. Oblicza liczbę połączeń każdego węzła.</p>
+
+        <h3>Oczekiwane wyniki Degree dla głównych postaci:</h3>
+        <div class="result-bar"><span class="name">JACK</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val">37</span></div>
+        <div class="result-bar"><span class="name">TYLER</span><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><span class="bar-val">20</span></div>
+        <div class="result-bar"><span class="name">MARLA</span><div class="bar-track"><div class="bar-fill" style="width:32%"></div></div><span class="bar-val">12</span></div>
+        <div class="result-bar"><span class="name">BOB</span><div class="bar-track"><div class="bar-fill" style="width:19%"></div></div><span class="bar-val">7</span></div>
+        <div class="result-bar"><span class="name">ANGEL FACE</span><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div><span class="bar-val">6</span></div>
+        <div class="result-bar"><span class="name">Reszta</span><div class="bar-track"><div class="bar-fill" style="width:5%; background: var(--muted)"></div></div><span class="bar-val">1–3</span></div>
+
+        <h3>② Weighted Degree</h3>
+        <p>Kliknij <strong>Run</strong> przy <em>Weighted Degree</em>. Uwzględnia wagi krawędzi — JACK dostanie ogromną wartość dzięki <code>weight=40</code> z Tylerem.</p>
+
+        <h3>③ Modularity (Community Detection)</h3>
+        <p>Kliknij <strong>Run</strong> przy <em>Modularity</em>. Gephi Lite automatycznie wykryje <strong>skupiska postaci</strong> (Space Monkeys, postacie z grupy wsparcia, detektywi itp.).</p>
+
+        <div class="settings-block">
+          <div class="line"><span class="key">Resolution</span><span class="val">1.0</span></div>
+          <div class="line"><span class="key">Randomize</span><span class="val">✓</span></div>
+        </div>
+
+        <h3>④ Betweenness Centrality</h3>
+        <p>Kliknij <strong>Run</strong> przy <em>Network Diameter / Betweenness Centrality</em>. Mierzy, jak często dany węzeł leży „na drodze" między innymi. JACK i TYLER mają tutaj bardzo wysokie wartości — są mostami informacyjnymi fabuły.</p>
+
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <span class="tip-body">Po obliczeniu metryk <strong>wróć do zakładki Data</strong> i sprawdź tabelę Nodes — zobaczysz nowe kolumny: <code>degree</code>, <code>modularity_class</code>, <code>betweenness centrality</code>.</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /steps-container -->
+
+  <!-- =================== PHASE 4 =================== -->
+  <div class="phase-label">Faza 4 — Wygląd (Appearance)</div>
+  <div class="steps-container">
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 4;"></div>
+      <div class="step-content">
+        <h2>Rozmiar węzłów według Degree</h2>
+        <p>Sprawmy, żeby JACK i TYLER byli wizualnie dominujący — proporcjonalnie do ich znaczenia w fabule.</p>
+
+        <div class="action">
+          <strong>🎨 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn">Lewy panel</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">Appearance</span>
+            <span class="arrow">→</span>
+            <span class="btn">Nodes</span>
+            <span class="arrow">→</span>
+            <span class="btn">Size (ikona kółek)</span>
+          </div>
+        </div>
+
+        <p>Wybierz <strong>Ranking</strong> i z listy wybierz atrybut <code>degree</code>.</p>
+
+        <div class="settings-block">
+          <div class="line"><span class="key">Attribute</span><span class="val">degree</span></div>
+          <div class="line"><span class="key">Min size</span><span class="val">5</span></div>
+          <div class="line"><span class="key">Max size</span><span class="val">40</span></div>
+        </div>
+
+        <div class="action">
+          <strong>✅ Zatwierdź:</strong>
+          <div class="click-path">
+            <span class="btn primary">Apply</span>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <span class="tip-body">Możesz też użyć <strong>Weighted Degree</strong> zamiast Degree — da to jeszcze wyraźniejszy efekt, bo JACK z Tylerem mają łącznie bardzo dużą wagę.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 5;"></div>
+      <div class="step-content">
+        <h2>Koloruj węzły według Modularity Class</h2>
+        <p>Każda wspólnota (klaster) dostanie swój kolor — od razu zobaczysz grupy postaci: Space Monkeys, trio główne, detektywi, epizodyczne.</p>
+
+        <div class="action">
+          <strong>🎨 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn primary">Appearance</span>
+            <span class="arrow">→</span>
+            <span class="btn">Nodes</span>
+            <span class="arrow">→</span>
+            <span class="btn">Color (ikona palety)</span>
+            <span class="arrow">→</span>
+            <span class="btn">Partition</span>
+          </div>
+        </div>
+
+        <p>Z listy wybierz <code>modularity_class</code>. Gephi Lite automatycznie przypisze kolory. Kliknij <strong>Apply</strong>.</p>
+
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <span class="tip-body">Możesz <strong>ręcznie zmienić kolor</strong> każdej klasy klikając na kolorowy kwadrat przy każdej wartości modularity. Np. ustaw klasę JACK+TYLER na czerwony, Space Monkeys na niebieski.</span>
+        </div>
+
+        <h3>Alternatywa: kolor według Betweenness Centrality</h3>
+        <p>Wybierz <strong>Ranking</strong> zamiast Partition i atrybut <code>betweenness centrality</code> — zobaczysz gradientową skalę od zimnych (peryferyjnych) do gorących (centralnych) kolorów.</p>
+      </div>
+    </div>
+
+    <!-- STEP 7 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 6;"></div>
+      <div class="step-content">
+        <h2>Grubość krawędzi według wagi (Weight)</h2>
+        <p>Krawędź JACK–TYLER (<code>weight=40</code>) powinna być wyraźnie grubsza niż krawędzie z wagą 1.</p>
+
+        <div class="action">
+          <strong>🎨 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn primary">Appearance</span>
+            <span class="arrow">→</span>
+            <span class="btn">Edges</span>
+            <span class="arrow">→</span>
+            <span class="btn">Size (ikona linii)</span>
+            <span class="arrow">→</span>
+            <span class="btn">Ranking</span>
+          </div>
+        </div>
+
+        <p>Wybierz atrybut <code>weight</code>.</p>
+
+        <div class="settings-block">
+          <div class="line"><span class="key">Min edge size</span><span class="val">0.5</span></div>
+          <div class="line"><span class="key">Max edge size</span><span class="val">8</span></div>
+          <div class="line"><span class="key">Attribute</span><span class="val">weight</span></div>
+        </div>
+
+        <div class="action">
+          <div class="click-path">
+            <span class="btn primary">Apply</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /steps-container -->
+
+  <!-- =================== PHASE 5 =================== -->
+  <div class="phase-label">Faza 5 — Etykiety i czytelność</div>
+  <div class="steps-container">
+
+    <!-- STEP 8 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 7;"></div>
+      <div class="step-content">
+        <h2>Włącz i dostosuj etykiety węzłów</h2>
+        <p>W prawym dolnym rogu okna grafu znajdziesz pasek sterowania renderowaniem. Kliknij ikonę <strong>T</strong> (Labels), żeby włączyć wyświetlanie nazw postaci.</p>
+
+        <div class="action">
+          <strong>🔤 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn">Dolny pasek grafu</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">T (Show Labels)</span>
+          </div>
+        </div>
+
+        <h3>Rozmiar etykiet proporcjonalny do węzła</h3>
+        <p>Kliknij na ikonę ustawień etykiet i włącz <strong>„Size proportional to node size"</strong> — JACK i TYLER będą mieć duże napisy, peryferyjne postacie małe.</p>
+
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <span class="tip-body">Przy dużej liczbie węzłów etykiety mogą się nakładać. Użyj suwaka <strong>Label density</strong> (dolny pasek), żeby Gephi Lite automatycznie ukrywał nakładające się etykiety — pokazuje tylko te, które mieszczą się bez kolizji.</span>
+        </div>
+
+        <div class="warn">
+          <span class="tip-icon">⚠️</span>
+          <span class="tip-body">Węzeł <strong><code>JACK\nNO...TYLER</code></strong> ma wieloliniową nazwę — artefakt danych. Jeśli zakłóca wizualizację, usuń go w zakładce <strong>Data → Nodes</strong> (kliknij wiersz → Delete node).</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /steps-container -->
+
+  <!-- =================== PHASE 6 =================== -->
+  <div class="phase-label">Faza 6 — Filtrowanie sieci</div>
+  <div class="steps-container">
+
+    <!-- STEP 9 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 8;"></div>
+      <div class="step-content">
+        <h2>Filtruj według Degree Range — ukryj epizodyczne postacie</h2>
+        <p>Twoja sieć ma wiele węzłów z Degree = 1 (jednorazowe postacie epizodyczne). Filtr pozwala skupić się na ważniejszych postaciach.</p>
+
+        <div class="action">
+          <strong>🔍 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn">Lewy panel</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">Filters</span>
+            <span class="arrow">→</span>
+            <span class="btn">Topology</span>
+            <span class="arrow">→</span>
+            <span class="btn">Degree Range</span>
+          </div>
+        </div>
+
+        <p>Ustaw <strong>Min = 3</strong>, żeby zobaczyć tylko postacie z minimum 3 połączeniami. Kliknij <strong>Apply filter</strong>.</p>
+
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <span class="tip-body">Filtr jest <strong>nieinwazyjny</strong> — nie usuwa węzłów, tylko je ukrywa. Możesz go wyłączyć w dowolnym momencie klikając <strong>„Remove filter"</strong>.</span>
+        </div>
+
+        <h3>Filtr według wagi krawędzi</h3>
+        <p>Możesz też filtrować według atrybutu <code>weight</code>:</p>
+
+        <div class="action">
+          <div class="click-path">
+            <span class="btn">Filters</span>
+            <span class="arrow">→</span>
+            <span class="btn">Attributes</span>
+            <span class="arrow">→</span>
+            <span class="btn">Edges</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">weight Range</span>
+          </div>
+        </div>
+
+        <p>Ustaw <strong>Min = 2</strong> — zobaczysz tylko połączenia z wagą ≥ 2, czyli faktycznie istotne interakcje.</p>
+      </div>
+    </div>
+
+  </div><!-- /steps-container -->
+
+  <!-- =================== PHASE 7 =================== -->
+  <div class="phase-label">Faza 7 — Eksploracja interaktywna</div>
+  <div class="steps-container">
+
+    <!-- STEP 10 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 9;"></div>
+      <div class="step-content">
+        <h2>Tryb selekcji — eksploruj pojedyncze węzły</h2>
+        <p>Gephi Lite pozwala interaktywnie eksplorować sieć — kliknij na postać, żeby zobaczyć jej połączenia.</p>
+
+        <div class="action">
+          <strong>🖱️ Kliknij na węzeł JACK:</strong>
+          <div class="click-path">
+            <span class="btn primary">Kursor na węzeł JACK</span>
+            <span class="arrow">→</span>
+            <span class="btn">Kliknij</span>
+          </div>
+        </div>
+
+        <p>W prawym panelu pojawi się lista wszystkich połączeń JACKA z wagami. Możesz też <strong>Shift+Click</strong>, żeby zaznaczyć wiele węzłów naraz.</p>
+
+        <h3>Tryb „Ego network"</h3>
+        <p>Kliknij prawym przyciskiem na węzeł TYLER → wybierz <strong>„Select neighbors"</strong> (lub analogiczną opcję) — zaznaczone zostaną wszyscy sąsiedzi TYLERA, wizualnie izolując jego egonetwork.</p>
+
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <span class="tip-body">Możesz <strong>przenosić węzły</strong> klikając i przeciągając je. Przydatne do ręcznego poprawienia układu, np. odsunięcia źle wyzycjonowanego węzła.</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /steps-container -->
+
+  <!-- =================== PHASE 8 =================== -->
+  <div class="phase-label">Faza 8 — Eksport i zapis</div>
+  <div class="steps-container">
+
+    <!-- STEP 11 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 10;"></div>
+      <div class="step-content">
+        <h2>Eksportuj obraz sieci</h2>
+        <p>Gotową wizualizację możesz wyeksportować jako obraz PNG/SVG.</p>
+
+        <div class="action">
+          <strong>🖼️ Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn">Workspace (ikona w górnym lewym rogu)</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">Export as picture</span>
+          </div>
+        </div>
+
+        <div class="settings-block">
+          <div class="line"><span class="key">Format</span><span class="val">PNG</span></div>
+          <div class="line"><span class="key">Width</span><span class="val">3840 px (4K)</span></div>
+          <div class="line"><span class="key">Height</span><span class="val">2160 px (4K)</span></div>
+          <div class="line"><span class="key">Background</span><span class="val">do wyboru</span></div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-icon">💡</span>
+          <span class="tip-body">Dla grafu prezentacyjnego ustaw <strong>rozdzielczość 4K</strong> — przy mniejszych wartościach etykiety mogą być nieczytelne. SVG jest lepszy jeśli planujesz dalszą edycję w Illustratorze lub Inkscape.</span>
+        </div>
+
+        <h3>Eksport pliku grafu</h3>
+        <p>Żeby zachować graf z obliczonymi metrykami do dalszej pracy:</p>
+
+        <div class="action">
+          <div class="click-path">
+            <span class="btn">Workspace</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">Export graph file</span>
+            <span class="arrow">→</span>
+            <span class="btn">GEXF lub GraphML</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 12 -->
+    <div class="step">
+      <div class="step-number" style="counter-increment: step 11;"></div>
+      <div class="step-content">
+        <h2>Zapisz projekt Gephi Lite</h2>
+        <p>Zapisz całą konfigurację (układ, wygląd, filtry) jako projekt, żeby móc wrócić do pracy później.</p>
+
+        <div class="action">
+          <strong>💾 Ścieżka klikania:</strong>
+          <div class="click-path">
+            <span class="btn">Workspace</span>
+            <span class="arrow">→</span>
+            <span class="btn primary">Save project as...</span>
+            <span class="arrow">→</span>
+            <span class="btn">Pobierz .json</span>
+          </div>
+        </div>
+
+        <p>Projekt zapisany jako <code>.json</code> można wczytać z powrotem przez <strong>„Open a project"</strong> — zachowuje układ, coloring, rozmiary, wszystko.</p>
+
+        <div class="tip">
+          <span class="tip-icon">☁️</span>
+          <span class="tip-body"><strong>GitHub Integration:</strong> Gephi Lite pozwala zapisać projekt bezpośrednio do GitHub Gist. Kliknij <strong>Workspace → Connect to GitHub</strong>, autoryzuj aplikację i możesz synchronizować pracę między urządzeniami — przydatne do udostępniania wizualizacji.</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /steps-container -->
+
+  <hr class="divider">
+
+  <!-- BONUS -->
+  <div class="phase-label">Bonus — Zaawansowane funkcje</div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px;">
+
+    <div style="border: 1px solid var(--border); padding: 24px; background: var(--surface);">
+      <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; margin-bottom: 10px; letter-spacing: 0.04em;">Custom Scripts</h3>
+      <p style="font-size: 13px; color: var(--muted);">Workspace → Custom scripts. Możesz pisać JavaScript, który modyfikuje atrybuty węzłów. Np. skrypt automatycznie nadający kolor według progu degree.</p>
+    </div>
+
+    <div style="border: 1px solid var(--border); padding: 24px; background: var(--surface);">
+      <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; margin-bottom: 10px; letter-spacing: 0.04em;">Share as URL</h3>
+      <p style="font-size: 13px; color: var(--muted);">Workspace → Share graph as URL. Gephi Lite może zakodować cały stan wizualizacji w URL i wygenerować link do udostępnienia — bez serwera.</p>
+    </div>
+
+    <div style="border: 1px solid var(--border); padding: 24px; background: var(--surface);">
+      <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; margin-bottom: 10px; letter-spacing: 0.04em;">Attribute Model</h3>
+      <p style="font-size: 13px; color: var(--muted);">W Data → Nodes możesz edytować typ atrybutu <code>weight</code> z <em>Qualitative</em> na <em>Quantitative</em> — to odblokuje pełne możliwości filtrowania i rankingu wagowego.</p>
+    </div>
+
+    <div style="border: 1px solid var(--border); padding: 24px; background: var(--surface);">
+      <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; margin-bottom: 10px; letter-spacing: 0.04em;">Layout Quality</h3>
+      <p style="font-size: 13px; color: var(--muted);">Layout → Layout Quality → Connected-closeness. Eksperymentalna siatka pokazuje jak dobrze algorytm zgrupował połączone węzły. Sprawdź po ForceAtlas 2.</p>
+    </div>
+
+  </div>
+
+  <!-- SUMMARY -->
+  <div style="border: 1px solid var(--accent); padding: 28px 32px; background: rgba(212,56,42,0.04); margin-top: 8px;">
+    <p style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; font-weight: 600;">Kompletna kolejność kroków</p>
+    <ol style="padding-left: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 32px;">
+      <li>Import graf_postaci.graphml</li>
+      <li>Przeglądnij dane (Data tab)</li>
+      <li>ForceAtlas 2 (Scaling 100, Prevent Overlap)</li>
+      <li>Metryki: Degree, Weighted Degree, Modularity, Betweenness</li>
+      <li>Rozmiar węzłów → Degree (5–40)</li>
+      <li>Kolor węzłów → Modularity Class</li>
+      <li>Grubość krawędzi → weight (0.5–8)</li>
+      <li>Etykiety + size proportional</li>
+      <li>Filtr: Degree ≥ 3 lub weight ≥ 2</li>
+      <li>Eksploracja interaktywna (klik na węzeł)</li>
+      <li>Export PNG 4K</li>
+      <li>Save project .json</li>
+    </ol>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-left">graf_postaci.graphml &nbsp;·&nbsp; Fight Club Character Network &nbsp;·&nbsp; Tutorial Gephi Lite</div>
+  <div class="footer-right"><a href="https://lite.gephi.org" target="_blank">lite.gephi.org</a></div>
+</footer>
+
+</body>
+</html>
