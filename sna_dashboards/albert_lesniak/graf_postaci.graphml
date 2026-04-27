@@ -1,0 +1,611 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d0" for="edge" attr.name="weight" attr.type="long"/>
+<graph edgedefault="undirected"><node id="RICHIE"/>
+<node id="TOBACK"/>
+<node id="FRANK"/>
+<node id="TEDDY"/>
+<node id="ANA"/>
+<node id="SPEARMAN"/>
+<node id="RIVERA"/>
+<node id="CHARLIE"/>
+<node id="TOSCA"/>
+<node id="DOC"/>
+<node id="JONES"/>
+<node id="TRUPO"/>
+<node id="TANGO"/>
+<node id="MRS. LUCAS"/>
+<node id="NATE"/>
+<node id="SHEILA"/>
+<node id="REPORTER ON TV"/>
+<node id="BANKER"/>
+<node id="ABRUZZO"/>
+<node id="BAILIFF"/>
+<node id="JIMMY"/>
+<node id="LAURIE"/>
+<node id="TONY"/>
+<node id="GENERAL"/>
+<node id="SIBOTA"/>
+<node id="DETECTIVE"/>
+<node id="PROFESSOR"/>
+<node id="KA 760 -"/>
+<node id="CONTINUED:"/>
+<node id="MRS. TOSCA"/>
+<node id="ARMY CAPTAIN"/>
+<node id="COLONEL"/>
+<node id="CLERK"/>
+<node id="CHEMIST"/>
+<node id="SINGER"/>
+<node id="CAMPIZI"/>
+<node id="CHARLENE"/>
+<node id="BUMPY"/>
+<node id="GANGSTA 2"/>
+<node id="FBI AGENT"/>
+<node id="MAN"/>
+<node id="DISPATCHER"/>
+<node id="GANGSTA 1"/>
+<node id="ROSSI"/>
+<node id="REDTOP"/>
+<node id="RED TOP"/>
+<node id="JACKIE"/>
+<node id="JOE LOUIS"/>
+<node id="STEVIE"/>
+<node id="THAI"/>
+<node id="SERVICEMAN 1"/>
+<node id="SERVICEMAN 2"/>
+<node id="TURNER"/>
+<node id="DARYLYNN"/>
+<node id="MEDICAL EXAMINER"/>
+<node id="REPORTER"/>
+<node id="JUDGE"/>
+<node id="GUY WITH GUN"/>
+<node id="KA 760."/>
+<node id="PARAMEDIC"/>
+<node id="MECHANIC"/>
+<node id="SPEARMAN V/O PHONE"/>
+<node id="SIU DET. 2"/>
+<node id="SIU DET. 1"/>
+<node id="SIU DET 1"/>
+<node id="TAXI DRIVER"/>
+<node id="US ATTORNEY"/>
+<node id="VIDA"/>
+<edge source="RICHIE" target="TOBACK">
+  <data key="d0">12</data>
+</edge>
+<edge source="RICHIE" target="SPEARMAN">
+  <data key="d0">7</data>
+</edge>
+<edge source="RICHIE" target="RIVERA">
+  <data key="d0">6</data>
+</edge>
+<edge source="RICHIE" target="FRANK">
+  <data key="d0">5</data>
+</edge>
+<edge source="RICHIE" target="JONES">
+  <data key="d0">4</data>
+</edge>
+<edge source="RICHIE" target="TOSCA">
+  <data key="d0">3</data>
+</edge>
+<edge source="RICHIE" target="SHEILA">
+  <data key="d0">3</data>
+</edge>
+<edge source="RICHIE" target="REPORTER ON TV">
+  <data key="d0">3</data>
+</edge>
+<edge source="RICHIE" target="BAILIFF">
+  <data key="d0">2</data>
+</edge>
+<edge source="RICHIE" target="ABRUZZO">
+  <data key="d0">2</data>
+</edge>
+<edge source="RICHIE" target="JIMMY">
+  <data key="d0">2</data>
+</edge>
+<edge source="RICHIE" target="LAURIE">
+  <data key="d0">2</data>
+</edge>
+<edge source="RICHIE" target="TRUPO">
+  <data key="d0">2</data>
+</edge>
+<edge source="RICHIE" target="TONY">
+  <data key="d0">2</data>
+</edge>
+<edge source="RICHIE" target="BANKER">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="ARMY CAPTAIN">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="CONTINUED:">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="CLERK">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="CHARLIE">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="CAMPIZI">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="FBI AGENT">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="GANGSTA 2">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="GANGSTA 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="DETECTIVE">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="DISPATCHER">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="KA 760 -">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="JUDGE">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="JOE LOUIS">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="MEDICAL EXAMINER">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="MAN">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="PROFESSOR">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="PARAMEDIC">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="REPORTER">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="MECHANIC">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="SPEARMAN V/O PHONE">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="SIU DET. 2">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="SIU DET. 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="SIU DET 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="TANGO">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="TAXI DRIVER">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="US ATTORNEY">
+  <data key="d0">1</data>
+</edge>
+<edge source="RICHIE" target="VIDA">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="CONTINUED:">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="FRANK">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="FBI AGENT">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="MRS. LUCAS">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="REPORTER ON TV">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="MAN">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="SIU DET 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="SIU DET. 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="SIU DET. 2">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="SPEARMAN">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="TONY">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="TRUPO">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="US ATTORNEY">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOBACK" target="VIDA">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="TEDDY">
+  <data key="d0">10</data>
+</edge>
+<edge source="FRANK" target="ANA">
+  <data key="d0">9</data>
+</edge>
+<edge source="FRANK" target="CHARLIE">
+  <data key="d0">5</data>
+</edge>
+<edge source="FRANK" target="TOSCA">
+  <data key="d0">5</data>
+</edge>
+<edge source="FRANK" target="DOC">
+  <data key="d0">4</data>
+</edge>
+<edge source="FRANK" target="TRUPO">
+  <data key="d0">3</data>
+</edge>
+<edge source="FRANK" target="TANGO">
+  <data key="d0">3</data>
+</edge>
+<edge source="FRANK" target="MRS. LUCAS">
+  <data key="d0">3</data>
+</edge>
+<edge source="FRANK" target="NATE">
+  <data key="d0">3</data>
+</edge>
+<edge source="FRANK" target="BANKER">
+  <data key="d0">2</data>
+</edge>
+<edge source="FRANK" target="JIMMY">
+  <data key="d0">2</data>
+</edge>
+<edge source="FRANK" target="GENERAL">
+  <data key="d0">2</data>
+</edge>
+<edge source="FRANK" target="CONTINUED:">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="COLONEL">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="CHEMIST">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="CHARLENE">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="BUMPY">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="GANGSTA 2">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="GANGSTA 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="DETECTIVE">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="ROSSI">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="REPORTER ON TV">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="REDTOP">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="RED TOP">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="MRS. TOSCA">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="PROFESSOR">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="JACKIE">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="JOE LOUIS">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="SPEARMAN">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="STEVIE">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="THAI">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="SINGER">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="SIBOTA">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="SERVICEMAN 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="SERVICEMAN 2">
+  <data key="d0">1</data>
+</edge>
+<edge source="FRANK" target="TURNER">
+  <data key="d0">1</data>
+</edge>
+<edge source="TEDDY" target="JIMMY">
+  <data key="d0">2</data>
+</edge>
+<edge source="TEDDY" target="BANKER">
+  <data key="d0">1</data>
+</edge>
+<edge source="TEDDY" target="ANA">
+  <data key="d0">1</data>
+</edge>
+<edge source="TEDDY" target="CHARLIE">
+  <data key="d0">1</data>
+</edge>
+<edge source="TEDDY" target="DETECTIVE">
+  <data key="d0">1</data>
+</edge>
+<edge source="TEDDY" target="KA 760.">
+  <data key="d0">1</data>
+</edge>
+<edge source="TEDDY" target="SIBOTA">
+  <data key="d0">1</data>
+</edge>
+<edge source="TEDDY" target="STEVIE">
+  <data key="d0">1</data>
+</edge>
+<edge source="TEDDY" target="TRUPO">
+  <data key="d0">1</data>
+</edge>
+<edge source="ANA" target="MRS. LUCAS">
+  <data key="d0">1</data>
+</edge>
+<edge source="ANA" target="CONTINUED:">
+  <data key="d0">1</data>
+</edge>
+<edge source="ANA" target="TOSCA">
+  <data key="d0">1</data>
+</edge>
+<edge source="ANA" target="MRS. TOSCA">
+  <data key="d0">1</data>
+</edge>
+<edge source="ANA" target="TRUPO">
+  <data key="d0">1</data>
+</edge>
+<edge source="ANA" target="DOC">
+  <data key="d0">1</data>
+</edge>
+<edge source="SPEARMAN" target="ABRUZZO">
+  <data key="d0">2</data>
+</edge>
+<edge source="SPEARMAN" target="JONES">
+  <data key="d0">2</data>
+</edge>
+<edge source="SPEARMAN" target="FBI AGENT">
+  <data key="d0">1</data>
+</edge>
+<edge source="SPEARMAN" target="KA 760 -">
+  <data key="d0">1</data>
+</edge>
+<edge source="SPEARMAN" target="JIMMY">
+  <data key="d0">1</data>
+</edge>
+<edge source="SPEARMAN" target="GUY WITH GUN">
+  <data key="d0">1</data>
+</edge>
+<edge source="SPEARMAN" target="MAN">
+  <data key="d0">1</data>
+</edge>
+<edge source="SPEARMAN" target="TOSCA">
+  <data key="d0">1</data>
+</edge>
+<edge source="SPEARMAN" target="TRUPO">
+  <data key="d0">1</data>
+</edge>
+<edge source="RIVERA" target="CLERK">
+  <data key="d0">1</data>
+</edge>
+<edge source="RIVERA" target="DISPATCHER">
+  <data key="d0">1</data>
+</edge>
+<edge source="CHARLIE" target="BANKER">
+  <data key="d0">2</data>
+</edge>
+<edge source="CHARLIE" target="TOSCA">
+  <data key="d0">1</data>
+</edge>
+<edge source="CHARLIE" target="TANGO">
+  <data key="d0">1</data>
+</edge>
+<edge source="CHARLIE" target="SINGER">
+  <data key="d0">1</data>
+</edge>
+<edge source="CHARLIE" target="SIBOTA">
+  <data key="d0">1</data>
+</edge>
+<edge source="CHARLIE" target="REPORTER ON TV">
+  <data key="d0">1</data>
+</edge>
+<edge source="CHARLIE" target="PROFESSOR">
+  <data key="d0">1</data>
+</edge>
+<edge source="CHARLIE" target="JIMMY">
+  <data key="d0">1</data>
+</edge>
+<edge source="CHARLIE" target="DETECTIVE">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOSCA" target="BANKER">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOSCA" target="JOE LOUIS">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOSCA" target="MRS. TOSCA">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOSCA" target="PROFESSOR">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOSCA" target="REPORTER ON TV">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOSCA" target="TANGO">
+  <data key="d0">1</data>
+</edge>
+<edge source="TOSCA" target="TRUPO">
+  <data key="d0">1</data>
+</edge>
+<edge source="JONES" target="ABRUZZO">
+  <data key="d0">2</data>
+</edge>
+<edge source="JONES" target="JIMMY">
+  <data key="d0">1</data>
+</edge>
+<edge source="JONES" target="KA 760 -">
+  <data key="d0">1</data>
+</edge>
+<edge source="TRUPO" target="SIU DET 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="TRUPO" target="SIU DET. 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="TRUPO" target="SIU DET. 2">
+  <data key="d0">1</data>
+</edge>
+<edge source="TANGO" target="BANKER">
+  <data key="d0">1</data>
+</edge>
+<edge source="TANGO" target="PROFESSOR">
+  <data key="d0">1</data>
+</edge>
+<edge source="TANGO" target="REPORTER ON TV">
+  <data key="d0">1</data>
+</edge>
+<edge source="MRS. LUCAS" target="CONTINUED:">
+  <data key="d0">1</data>
+</edge>
+<edge source="NATE" target="COLONEL">
+  <data key="d0">1</data>
+</edge>
+<edge source="NATE" target="GENERAL">
+  <data key="d0">1</data>
+</edge>
+<edge source="NATE" target="THAI">
+  <data key="d0">1</data>
+</edge>
+<edge source="SHEILA" target="BAILIFF">
+  <data key="d0">1</data>
+</edge>
+<edge source="SHEILA" target="SPEARMAN V/O PHONE">
+  <data key="d0">1</data>
+</edge>
+<edge source="REPORTER ON TV" target="BANKER">
+  <data key="d0">1</data>
+</edge>
+<edge source="REPORTER ON TV" target="CONTINUED:">
+  <data key="d0">1</data>
+</edge>
+<edge source="REPORTER ON TV" target="DETECTIVE">
+  <data key="d0">1</data>
+</edge>
+<edge source="REPORTER ON TV" target="PROFESSOR">
+  <data key="d0">1</data>
+</edge>
+<edge source="REPORTER ON TV" target="REPORTER">
+  <data key="d0">1</data>
+</edge>
+<edge source="REPORTER ON TV" target="MEDICAL EXAMINER">
+  <data key="d0">1</data>
+</edge>
+<edge source="BANKER" target="SIBOTA">
+  <data key="d0">1</data>
+</edge>
+<edge source="BANKER" target="DETECTIVE">
+  <data key="d0">1</data>
+</edge>
+<edge source="BANKER" target="JIMMY">
+  <data key="d0">1</data>
+</edge>
+<edge source="BANKER" target="PROFESSOR">
+  <data key="d0">1</data>
+</edge>
+<edge source="ABRUZZO" target="KA 760 -">
+  <data key="d0">1</data>
+</edge>
+<edge source="ABRUZZO" target="JIMMY">
+  <data key="d0">1</data>
+</edge>
+<edge source="BAILIFF" target="LAURIE">
+  <data key="d0">1</data>
+</edge>
+<edge source="JIMMY" target="KA 760 -">
+  <data key="d0">1</data>
+</edge>
+<edge source="JIMMY" target="DARYLYNN">
+  <data key="d0">1</data>
+</edge>
+<edge source="JIMMY" target="DETECTIVE">
+  <data key="d0">1</data>
+</edge>
+<edge source="JIMMY" target="SIBOTA">
+  <data key="d0">1</data>
+</edge>
+<edge source="TONY" target="VIDA">
+  <data key="d0">1</data>
+</edge>
+<edge source="GENERAL" target="COLONEL">
+  <data key="d0">1</data>
+</edge>
+<edge source="SIBOTA" target="DETECTIVE">
+  <data key="d0">1</data>
+</edge>
+<edge source="DETECTIVE" target="MEDICAL EXAMINER">
+  <data key="d0">1</data>
+</edge>
+<edge source="DETECTIVE" target="REPORTER">
+  <data key="d0">1</data>
+</edge>
+<edge source="GANGSTA 2" target="GANGSTA 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="FBI AGENT" target="MAN">
+  <data key="d0">1</data>
+</edge>
+<edge source="RED TOP" target="SERVICEMAN 2">
+  <data key="d0">1</data>
+</edge>
+<edge source="RED TOP" target="SERVICEMAN 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="SERVICEMAN 1" target="SERVICEMAN 2">
+  <data key="d0">1</data>
+</edge>
+<edge source="MEDICAL EXAMINER" target="REPORTER">
+  <data key="d0">1</data>
+</edge>
+<edge source="SIU DET. 2" target="SIU DET 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="SIU DET. 2" target="SIU DET. 1">
+  <data key="d0">1</data>
+</edge>
+<edge source="SIU DET. 1" target="SIU DET 1">
+  <data key="d0">1</data>
+</edge>
+</graph></graphml>
