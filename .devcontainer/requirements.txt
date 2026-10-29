@@ -1,0 +1,6 @@
+# Biblioteki doinstalowywane przy tworzeniu codespace.
+# pandas, matplotlib i requests są już w domyślnym obrazie Codespaces.
+networkx
+beautifulsoup4
+lxml
+openai
