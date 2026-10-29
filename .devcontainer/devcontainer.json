@@ -1,0 +1,32 @@
+{
+  "name": "Analiza scenariuszy filmowych",
+  // Domyślny obraz GitHub Codespaces: miejsce, które zajmuje, nie zużywa
+  // darmowego limitu dysku studentów (inny obraz by go zużywał).
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  // Najmniejsza maszyna (2 rdzenie) zużywa najmniej darmowych godzin.
+  "hostRequirements": {
+    "cpus": 2
+  },
+  // Biblioteki, których brakuje w obrazie (pandas, matplotlib i requests już są).
+  "postCreateCommand": "/home/codespace/.python/current/bin/python3 -m pip install --user --no-warn-script-location -r .devcontainer/requirements.txt",
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "notebooks/analiza_sieciowa_scenariusza.ipynb"
+      ]
+    },
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/home/codespace/.python/current/bin/python3",
+        // Notatniki zapisują i czytają pliki w swoim folderze (notebooks/),
+        // więc kolejne moduły widzą wyniki poprzednich.
+        "jupyter.notebookFileRoot": "${fileDirname}"
+      }
+    }
+  }
+  // Prebuildów Codespaces nie włączamy: ich koszt nalicza się właścicielowi repozytorium.
+}
